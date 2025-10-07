@@ -1,5 +1,5 @@
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -I.
 NAME = ex02
 SRCS = main.cpp
 OBJS = $(SRCS:.cpp=.o)

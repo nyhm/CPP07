@@ -1,132 +1,47 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "Array.hpp"
 
-// ANSI color codes
-#define RESET   "\033[0m"
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define YELLOW  "\033[33m"
-#define BLUE    "\033[34m"
-#define MAGENTA "\033[35m"
-#define CYAN    "\033[36m"
-#define WHITE   "\033[37m"
-#define BOLD    "\033[1m"
+#define MAX_VAL 750
 
-int main()
+int main(int, char**)
 {
-	std::cout << BOLD << CYAN << "=== EX02: Array ===" << RESET << std::endl;
-	std::cout << std::endl;
+	Array<int> numbers(MAX_VAL);
+	int* mirror = new int[MAX_VAL];
+	srand(time(NULL));
 
-	// Test default constructor
-	std::cout << BOLD << YELLOW << "--- Default Constructor Test ---" << RESET << std::endl;
-	Array<int> emptyArray;
-	std::cout << "Empty array size: " << GREEN << emptyArray.size() << RESET << std::endl;
-
-	// Test constructor with size
-	std::cout << std::endl;
-	std::cout << BOLD << YELLOW << "--- Constructor with Size Test ---" << RESET << std::endl;
-	Array<int> intArray(5);
-	std::cout << "Array size: " << GREEN << intArray.size() << RESET << std::endl;
-
-	// Test element access and assignment
-	std::cout << "Setting values: ";
-	for (unsigned int i = 0; i < intArray.size(); i++)
+	for (int i = 0; i < MAX_VAL; i++)
 	{
-		intArray[i] = i * 10;
-		std::cout << intArray[i] << " ";
-	}
-	std::cout << std::endl;
-
-	// Test reading values
-	std::cout << "Reading values: ";
-	for (unsigned int i = 0; i < intArray.size(); i++)
-	{
-		std::cout << intArray[i] << " ";
-	}
-	std::cout << std::endl;
-
-	// Test copy constructor
-	std::cout << std::endl;
-	std::cout << BOLD << YELLOW << "--- Copy Constructor Test ---" << RESET << std::endl;
-	Array<int> copiedArray(intArray);
-	std::cout << "Copied array values: ";
-	for (unsigned int i = 0; i < copiedArray.size(); i++)
-	{
-		std::cout << copiedArray[i] << " ";
-	}
-	std::cout << std::endl;
-
-	// Test assignment operator
-	std::cout << std::endl;
-	std::cout << BOLD << YELLOW << "--- Assignment Operator Test ---" << RESET << std::endl;
-	Array<int> assignedArray;
-	assignedArray = intArray;
-	std::cout << "Assigned array values: ";
-	for (unsigned int i = 0; i < assignedArray.size(); i++)
-	{
-		std::cout << assignedArray[i] << " ";
-	}
-	std::cout << std::endl;
-
-	// Test deep copy (modify original, check copy is unaffected)
-	std::cout << std::endl;
-	std::cout << BOLD << YELLOW << "--- Deep Copy Test ---" << RESET << std::endl;
-	intArray[0] = 999;
-	std::cout << "Original array after modification: ";
-	for (unsigned int i = 0; i < intArray.size(); i++)
-	{
-		std::cout << intArray[i] << " ";
-	}
-	std::cout << std::endl;
-	std::cout << "Copied array (should be unchanged): ";
-	for (unsigned int i = 0; i < copiedArray.size(); i++)
-	{
-		std::cout << copiedArray[i] << " ";
-	}
-	std::cout << std::endl;
-
-	// Test exception handling
-	std::cout << std::endl;
-	std::cout << BOLD << YELLOW << "--- Exception Test ---" << RESET << std::endl;
-	std::cout << "Trying to access index 10 (size is " << intArray.size() << "): "<< std::flush;
-	try
-	{
-		intArray[10] = 0;
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << RED << "Exception caught: " << e.what() << RESET << std::endl;
+		const int value = rand();
+		numbers[i] = value;
+		mirror[i] = value;
 	}
 
-	// Test with different types
-	std::cout << std::endl;
-	std::cout << BOLD << YELLOW << "--- String Array Test ---" << RESET << std::endl;
-	Array<std::string> stringArray(3);
-	stringArray[0] = "I";
-	stringArray[1] = "am";
-	stringArray[2] = "hnagashi!";
-	
-	std::cout << "String array values: ";
-	for (unsigned int i = 0; i < stringArray.size(); i++)
 	{
-		std::cout << stringArray[i] << " ";
+		Array<int> tmp = numbers;
+		Array<int> test(tmp);
 	}
-	std::cout << std::endl;
 
-	// Test const array
-	std::cout << std::endl;
-	std::cout << BOLD << YELLOW << "--- Const Array Test ---" << RESET << std::endl;
-	const Array<int> constArray(intArray);
-	std::cout << "Const array values (read-only): ";
-	for (unsigned int i = 0; i < constArray.size(); i++)
+	for (int i = 0; i < MAX_VAL; i++)
 	{
-		std::cout << constArray[i] << " ";
+		if (mirror[i] != numbers[i])
+		{
+			std::cerr << "didn't save the same value!!" << std::endl;
+			delete [] mirror;
+			return 1;
+		}
 	}
-	std::cout << std::endl;
-	std::cout << "Const array size: " << GREEN << constArray.size() << RESET << std::endl;
 
-	std::cout << std::endl;
-	std::cout << BOLD << GREEN << "✅ All Array tests completed successfully!" << RESET << std::endl;
+	try { numbers[-2] = 0; }
+	catch (const std::exception& e) { std::cerr << e.what() << '\n'; }
 
+	try { numbers[MAX_VAL] = 0; }
+	catch (const std::exception& e) { std::cerr << e.what() << '\n'; }
+
+	for (int i = 0; i < MAX_VAL; i++)
+		numbers[i] = rand();
+
+	delete [] mirror;
 	return 0;
 }
