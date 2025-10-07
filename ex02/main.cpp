@@ -88,33 +88,23 @@ int main()
 	// Test exception handling
 	std::cout << std::endl;
 	std::cout << BOLD << YELLOW << "--- Exception Test ---" << RESET << std::endl;
+	std::cout << "Trying to access index 10 (size is " << intArray.size() << "): "<< std::flush;
 	try
 	{
-		std::cout << "Trying to access index -2: ";
-		intArray[-2] = 0;
-	}
-	catch (const std::exception& e)
-	{
-		std::cout << RED << "Exception caught for negative index!" << RESET << std::endl;
-	}
-
-	try
-	{
-		std::cout << "Trying to access index 10 (size is " << intArray.size() << "): ";
 		intArray[10] = 0;
 	}
 	catch (const std::exception& e)
 	{
-		std::cout << RED << "Exception caught for out-of-bounds index!" << RESET << std::endl;
+		std::cout << RED << "Exception caught: " << e.what() << RESET << std::endl;
 	}
 
 	// Test with different types
 	std::cout << std::endl;
 	std::cout << BOLD << YELLOW << "--- String Array Test ---" << RESET << std::endl;
 	Array<std::string> stringArray(3);
-	stringArray[0] = "Hello";
-	stringArray[1] = "World";
-	stringArray[2] = "C++";
+	stringArray[0] = "I";
+	stringArray[1] = "am";
+	stringArray[2] = "hnagashi!";
 	
 	std::cout << "String array values: ";
 	for (unsigned int i = 0; i < stringArray.size(); i++)

@@ -2,7 +2,7 @@
 # define ITER_HPP
 
 template<typename T>
-void iter(T *array, size_t length, void (*f)(T &))
+void iter(T *array, const size_t length, void (*f)(T &))
 {
 	if (!array || !f)
 		return;
@@ -12,7 +12,7 @@ void iter(T *array, size_t length, void (*f)(T &))
 }
 
 template<typename T>
-void iter(const T *array, size_t length, void (*f)(const T &))
+void iter(const T *array, const size_t length, void (*f)(const T &))
 {
 	if (!array || !f)
 		return;

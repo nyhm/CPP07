@@ -13,14 +13,9 @@
 #define BOLD    "\033[1m"
 
 // Function templates for testing
-template<typename T>
-void printElement(T &element)
-{
-	std::cout << element << " ";
-}
 
 template<typename T>
-void printElementConst(const T &element)
+void printElement(const T &element)
 {
 	std::cout << element << " ";
 }
@@ -68,13 +63,13 @@ int main()
 	size_t constIntLength = sizeof(constIntArray) / sizeof(constIntArray[0]);
 	
 	std::cout << "Const array: ";
-	iter(constIntArray, constIntLength, &printElementConst<int>);
+	iter(constIntArray, constIntLength, &printElement<int>);
 	std::cout << std::endl;
 	
 	// Test with strings
 	std::cout << std::endl;
 	std::cout << BOLD << YELLOW << "--- String Array Test ---" << RESET << std::endl;
-	std::string stringArray[] = {"Hello", "World", "C++", "Templates"};
+	std::string stringArray[] = {"Hey", "I", "am", "hnagashi"};
 	size_t stringLength = sizeof(stringArray) / sizeof(stringArray[0]);
 	
 	std::cout << "String array: ";

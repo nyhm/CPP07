@@ -73,7 +73,7 @@ public:
 	T& operator[](unsigned int index)
 	{
 		if (index >= _size)
-			throw std::exception();
+			throw std::out_of_range("Index out of bounds.");
 		return _array[index];
 	}
 
@@ -81,7 +81,7 @@ public:
 	const T& operator[](unsigned int index) const
 	{
 		if (index >= _size)
-			throw std::exception();
+			throw std::out_of_range("Index out of bounds.");
 		return _array[index];
 	}
 
